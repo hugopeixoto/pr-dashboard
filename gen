@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require_relative "./prs.rb"
+require_relative "./prs2html.rb"
+
+File.write(
+  "prs.html",
+  generate_html(
+    prs_by_reviewer(
+      File.read("secret.txt").strip,
+      "ember-cli",
+    ),
+  ),
+)
