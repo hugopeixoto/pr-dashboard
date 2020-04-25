@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require_relative "./github.rb"
+
+gh = GitHub.new(ENV["GITHUB_TOKEN"])
+
+gh
+  .repos(ARGV.fetch(0))
+  .flat_map { |repo| gh.pull_requests(repo["full_name"]).to_a }
+  .tap { |prs| File.write("prs.json", JSON.generate(prs)) }
